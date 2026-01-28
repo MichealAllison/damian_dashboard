@@ -1,25 +1,32 @@
+"use client"
+
+import { Button } from "@/src/components/ui/button"
 import {
   ChevronDown,
-  Wallet,
-  CreditCard,
-  TrendingUp,
-  PiggyBank,
-  Shield,
   Calendar,
+  CalendarSyncIcon,
 } from "lucide-react"
+
+// Get greeting based on time of day
+const getGreeting = () => {
+  const hour = new Date().getHours()
+  if (hour < 12) return "Good morning"
+  if (hour < 18) return "Good afternoon"
+  return "Good evening"
+}
 
 // Cash account items
 const cashItems = [
   {
     title: "Cash Reserve",
-    icon: Wallet,
+    image: 'cash',
     iconBg: "bg-blue-100",
     iconColor: "text-blue-600",
     amount: "$10,000.00",
   },
   {
     title: "Checking",
-    icon: CreditCard,
+    image: 'checking',
     iconBg: "bg-blue-100",
     iconColor: "text-blue-600",
     amount: "$5,000.00",
@@ -31,7 +38,7 @@ const investingItems = [
   {
     title: "General Investing",
     subtitle: "Individual taxable",
-    icon: TrendingUp,
+    image: 'investing',
     iconBg: "bg-green-100",
     iconColor: "text-green-600",
     amount: "$5,000.00",
@@ -39,7 +46,7 @@ const investingItems = [
   {
     title: "Retirement",
     subtitle: "Joint taxable",
-    icon: PiggyBank,
+    image: 'retirement',
     iconBg: "bg-yellow-100",
     iconColor: "text-yellow-600",
     amount: "$10,000.00",
@@ -47,8 +54,8 @@ const investingItems = [
   {
     title: "Safety Net",
     subtitle: "Joint taxable",
-    icon: Shield,
-    iconBg: "bg-blue-500",
+    image: 'safety',
+    iconBg: "bg-blue-500/50",
     iconColor: "text-white",
     amount: "$20,000.00",
   },
@@ -56,20 +63,20 @@ const investingItems = [
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="bg-gray-50 p-6">
       {/* Header */}
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-gray-900">
-          Good morning, Alex
+          {getGreeting()}, Mazi
         </h1>
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+          <Button className="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
             Transfer or rollover
             <ChevronDown className="h-4 w-4" />
-          </button>
-          <button className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+          </Button>
+          <Button className="rounded-md bg-[#000B4E] px-4 py-2 text-sm font-medium text-white hover:bg-[#0012AA]">
             Deposit
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -84,13 +91,17 @@ const Dashboard = () => {
               {cashItems.map((item) => (
                 <div
                   key={item.title}
-                  className="flex items-center justify-between py-2"
+                  className="flex items-center justify-between border-t py-4"
                 >
                   <div className="flex items-center gap-3">
                     <div
                       className={`flex h-10 w-10 items-center justify-center rounded-lg ${item.iconBg}`}
                     >
-                      <item.icon className={`h-5 w-5 ${item.iconColor}`} />
+                      <img
+                      src={`/images/${item.image}.png`}
+                      alt={item.title}
+                      className="h-5 w-5"
+                      />
                     </div>
                     <span className="font-medium text-gray-900">
                       {item.title}
@@ -109,8 +120,8 @@ const Dashboard = () => {
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-900">Investing</h2>
               <a
-                href="#"
-                className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
+                href="/plan"
+                className="text-sm text-[#000B4E] hover:text-[#0012AA] hover:underline"
               >
                 See performance
               </a>
@@ -119,13 +130,17 @@ const Dashboard = () => {
               {investingItems.map((item) => (
                 <div
                   key={item.title}
-                  className="flex items-center justify-between py-2"
+                  className="flex items-center justify-between border-t py-4"
                 >
                   <div className="flex items-center gap-3">
                     <div
                       className={`flex h-10 w-10 items-center justify-center rounded-lg ${item.iconBg}`}
                     >
-                      <item.icon className={`h-5 w-5 ${item.iconColor}`} />
+                      <img
+                        src={`/images/${item.image}.png`}
+                        alt={item.title}
+                        className="h-5 w-5"
+                      />
                     </div>
                     <div>
                       <p className="font-medium text-gray-900">{item.title}</p>
@@ -144,7 +159,7 @@ const Dashboard = () => {
         </div>
 
         {/* Right column - Stats */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           {/* Net Worth Card */}
           <div className="rounded-lg bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
@@ -162,15 +177,13 @@ const Dashboard = () => {
               </div>
               <a
                 href="#"
-                className="mt-2 inline-block text-sm text-blue-600 hover:text-blue-700 hover:underline"
+                className="mt-2 inline-block text-sm text-[#000B4E] hover:text-[#0012AA] hover:underline"
               >
                 See breakdown
               </a>
             </div>
-          </div>
-
-          {/* Investment Performance Card */}
-          <div className="rounded-lg bg-white p-6 shadow-sm">
+             {/* Investment Performance Card */}
+          <div className="mt-6 border-t pt-6">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="font-semibold text-gray-900">
                 Investment performance
@@ -190,18 +203,21 @@ const Dashboard = () => {
                 <span className="text-sm text-gray-600">
                   Tax losses harvested
                 </span>
-                <span className="text-sm text-blue-600 hover:underline cursor-pointer">
+                <span className="text-sm text-[#000B4E] hover:underline cursor-pointer">
                   Turn on
                 </span>
               </div>
               <a
                 href="#"
-                className="mt-2 inline-block text-sm text-blue-600 hover:text-blue-700 hover:underline"
+                className="mt-2 inline-block text-sm text-[#000B4E] hover:text-[#0012AA] hover:underline"
               >
                 See detail
               </a>
             </div>
           </div>
+          </div>
+
+        
 
           {/* Scheduled Transactions Card */}
           <div className="rounded-lg bg-white p-6 shadow-sm">
@@ -211,14 +227,14 @@ const Dashboard = () => {
               </h3>
               <a
                 href="#"
-                className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
+                className="text-sm text-[#000B4E] hover:text-[#0012AA] hover:underline"
               >
                 See detail
               </a>
             </div>
-            <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-100">
-                <Calendar className="h-5 w-5 text-purple-600" />
+            <div className="flex items-start gap-3 border-t py-4 ">
+              <div className="flex h-10 w-10 p-3 items-center justify-center rounded-lg bg-purple-100">
+                <CalendarSyncIcon className="h-5 w-5 text-purple-600" />
               </div>
               <p className="text-sm text-gray-600">
                 Setting a recurring transaction can make it easier to save by

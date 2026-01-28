@@ -1,3 +1,5 @@
+"use client"
+
 import {
   LayoutDashboard,
   ListTodo,
@@ -8,6 +10,7 @@ import {
   Settings,
   LogOut,
 } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 import {
   Sidebar,
@@ -53,7 +56,7 @@ const accountItems = [
   },
   {
     title: "Plan",
-    url: "#",
+    url: "/plan",
     icon: FileText,
   },
   {
@@ -78,6 +81,8 @@ const userItems = [
 ]
 
 export function AppSidebar() {
+  const pathname = usePathname()
+
   return (
     <Sidebar className="border-none bg-[#000B4E]  w-full md:w-56 lg:w-64">
       <SidebarHeader className="p-4 pb-2">
@@ -92,24 +97,28 @@ export function AppSidebar() {
         <SidebarGroup className="py-2">
           <SidebarGroupContent>
             <SidebarMenu className="gap-1">
-              {mainItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    className="h-10 justify-start gap-3 rounded-md px-3 text-gray-300 hover:bg-white/10 hover:text-white"
-                  >
-                    <a href={item.url}>
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.title}</span>
-                      {item.badge && (
-                        <span className="ml-auto rounded bg-gray-600 px-2 py-0.5 text-xs text-white">
-                          {item.badge}
-                        </span>
-                      )}
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {mainItems.map((item) => {
+                const isActive = pathname === item.url
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      data-active={isActive}
+                      className="h-10 justify-start gap-3 rounded-md px-3 text-gray-300 hover:bg-white/10 hover:text-white data-[active=true]:bg-indigo-900/50 data-[active=true]:text-white"
+                    >
+                      <a href={item.url}>
+                        <item.icon className="h-5 w-5" />
+                        <span>{item.title}</span>
+                        {item.badge && (
+                          <span className="ml-auto rounded bg-gray-600 px-2 py-0.5 text-xs text-white">
+                            {item.badge}
+                          </span>
+                        )}
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -123,19 +132,23 @@ export function AppSidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="gap-1">
-              {accountItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    className="h-10 justify-start gap-3 rounded-md px-3 text-gray-300 hover:bg-white/10 hover:text-white"
-                  >
-                    <a href={item.url}>
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {accountItems.map((item) => {
+                const isActive = pathname === item.url
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      data-active={isActive}
+                      className="h-10 justify-start gap-3 rounded-md px-3 text-gray-300 hover:bg-white/10 hover:text-white data-[active=true]:bg-indigo-900/50 data-[active=true]:text-white"
+                    >
+                      <a href={item.url}>
+                        <item.icon className="h-5 w-5" />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -149,19 +162,23 @@ export function AppSidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="gap-1">
-              {userItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    className="h-10 justify-start gap-3 rounded-md px-3 text-gray-300 hover:bg-white/10 hover:text-white"
-                  >
-                    <a href={item.url}>
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {userItems.map((item) => {
+                const isActive = pathname === item.url
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      data-active={isActive}
+                      className="h-10 justify-start gap-3 rounded-md px-3 text-gray-300 hover:bg-white/10 hover:text-white data-[active=true]:bg-indigo-900/50 data-[active=true]:text-white"
+                    >
+                      <a href={item.url}>
+                        <item.icon className="h-5 w-5" />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
