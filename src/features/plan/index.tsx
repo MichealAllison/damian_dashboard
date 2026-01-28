@@ -114,16 +114,16 @@ const Plan = () => {
   const employerLength = (employerPercent / 100) * circumference
 
   return (
-    <div className="bg-gray-50 p-6">
+    <div className="bg-gray-50 p-4 md:p-6 min-h-full">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-4">Plan</h1>
+        <h1 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">Plan</h1>
         {/* Tabs */}
-        <div className="flex items-center gap-6 border-b border-gray-200">
+        <div className="flex items-center gap-4 md:gap-6 border-b border-gray-200 overflow-x-auto scrollbar-hide pb-px -mb-px">
           {tabs.map((tab) => (
             <button
               key={tab.title}
-              className={`pb-3 text-sm font-medium transition-colors ${
+              className={`pb-3 text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                 tab.isActive
                   ? "border-b-2 border-blue-600 text-blue-600"
                   : "text-gray-500 hover:text-gray-700"
@@ -136,14 +136,14 @@ const Plan = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3 mb-8">
+      <div className="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 md:grid-cols-3 mb-6 md:mb-8">
         {statsCards.map((card) => (
           <div 
             key={card.title} 
-            className="rounded-lg bg-white p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+            className="rounded-lg bg-white p-4 md:p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
           >
             <p className="text-sm text-gray-500 mb-1">{card.title}</p>
-            <p className="text-3xl font-semibold text-gray-900 mb-1">
+            <p className="text-2xl md:text-3xl font-semibold text-gray-900 mb-1">
               {card.value}
             </p>
             <p className="text-xs text-gray-400">{card.subtitle}</p>
@@ -152,15 +152,15 @@ const Plan = () => {
       </div>
 
       {/* Year-to-date contributions by source */}
-      <div className="rounded-lg bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold text-gray-900 mb-6">
+      <div className="rounded-lg bg-white p-4 md:p-6 shadow-sm overflow-hidden">
+        <h2 className="text-base md:text-lg font-semibold text-gray-900 mb-4 md:mb-6">
           Year-to-date contributions by source
         </h2>
 
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
           {/* Donut Chart */}
-          <div className="flex flex-col items-center justify-center lg:w-56 shrink-0">
-            <div className="relative w-56 h-40">
+          <div className="flex flex-col items-center justify-center w-full lg:w-56 shrink-0">
+            <div className="relative w-48 h-36 md:w-56 md:h-40">
               {/* SVG Donut Chart */}
               <svg className="w-full h-full" viewBox="0 0 100 100">
                 {/* Background circle */}
@@ -256,8 +256,8 @@ const Plan = () => {
           </div>
 
           {/* Table */}
-          <div className="flex-1">
-            <table className="w-full">
+          <div className="flex-1 overflow-x-auto">
+            <table className="w-full min-w-[500px]">
               <thead>
                 <tr className="border-b border-gray-200">
                   <th className="text-left text-sm font-medium text-gray-500 pb-3">

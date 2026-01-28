@@ -63,18 +63,18 @@ const investingItems = [
 
 const Dashboard = () => {
   return (
-    <div className="bg-gray-50 p-6">
+    <div className="bg-gray-50 p-4 md:p-6 min-h-full">
       {/* Header */}
-      <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-gray-900">
+      <div className="mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h1 className="text-lg lg:text-2xl font-semibold text-gray-900">
           {getGreeting()}, Mazi
         </h1>
-        <div className="flex items-center gap-3">
-          <Button className="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+          <Button className="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 sm:px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-50">
             Transfer or rollover
             <ChevronDown className="h-4 w-4" />
           </Button>
-          <Button className="rounded-md bg-[#000B4E] px-4 py-2 text-sm font-medium text-white hover:bg-[#0012AA]">
+          <Button className="rounded-md bg-[#000B4E] px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-white hover:bg-[#0012AA]">
             Deposit
           </Button>
         </div>
@@ -83,9 +83,9 @@ const Dashboard = () => {
       {/* Main content */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left column - Accounts */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4 md:space-y-6">
           {/* Cash Section */}
-          <div className="rounded-lg bg-white p-6 shadow-sm">
+          <div className="rounded-lg bg-white p-4 md:p-6 shadow-sm">
             <h2 className="mb-4 text-lg font-semibold text-gray-900">Cash</h2>
             <div className="space-y-4">
               {cashItems.map((item) => (
@@ -116,7 +116,7 @@ const Dashboard = () => {
           </div>
 
           {/* Investing Section */}
-          <div className="rounded-lg bg-white p-6 shadow-sm">
+          <div className="rounded-lg bg-white p-4 md:p-6 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-900">Investing</h2>
               <a
@@ -161,7 +161,7 @@ const Dashboard = () => {
         {/* Right column - Stats */}
         <div className="space-y-4">
           {/* Net Worth Card */}
-          <div className="rounded-lg bg-white p-6 shadow-sm">
+          <div className="rounded-lg bg-white p-4 md:p-6 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="font-semibold text-gray-900">Net worth</h3>
               <ChevronDown className="h-4 w-4 text-gray-500" />
@@ -220,7 +220,7 @@ const Dashboard = () => {
         
 
           {/* Scheduled Transactions Card */}
-          <div className="rounded-lg bg-white p-6 shadow-sm">
+          <div className="rounded-lg bg-white p-4 md:p-6 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="font-semibold text-gray-900">
                 Scheduled transactions
