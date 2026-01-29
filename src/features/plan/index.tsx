@@ -144,9 +144,9 @@ const Plan = () => {
   }, [total, circumference])
 
   return (
-    <div className="bg-gray-50 p-4 md:p-6 min-h-full">
+    <div className="bg-white p-4 md:p-6 min-h-full">
       {/* Header */}
-      <div className="mb-6">
+      <div className="mb-6 ">
         <h1 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">Plan</h1>
         {/* Tabs */}
         <div className="flex items-center gap-4 md:gap-6 border-b border-gray-200 overflow-x-auto scrollbar-hide pb-px -mb-px">
@@ -155,7 +155,7 @@ const Plan = () => {
               key={tab.title}
               className={`pb-3 text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                 tab.isActive
-                  ? "border-b-2 border-blue-600 text-blue-600"
+                  ? "border-b-2 border-[#1e1e1e] text-[#1e1e1e]"
                   : "text-gray-500 hover:text-gray-700"
               }`}
             >

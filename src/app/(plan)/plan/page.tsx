@@ -1,4 +1,4 @@
-import Plan from "../../features/plan";
+import Plan from "@/src/features/plan"
 
 export default function PlanPage() {
   return <Plan />
