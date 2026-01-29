@@ -66,15 +66,15 @@ const Dashboard = () => {
     <div className="bg-gray-50 p-4 md:p-6 min-h-full">
       {/* Header */}
       <div className="mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h1 className="text-lg lg:text-2xl font-semibold text-gray-900">
+        <h1 className="text-lg lg:text-2xl font-medium text-gray-900">
           {getGreeting()}, Mazi
         </h1>
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-          <Button className="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 sm:px-4 py-2 text-xs sm:text-sm text-gray-700 hover:bg-gray-50">
+          <Button className="flex items-center font-medium gap-2 rounded-sm border border-gray-300 bg-white px-3 sm:px-6 py-4 text-xs sm:text-sm text-gray-700 hover:bg-gray-50">
             Transfer or rollover
             <ChevronDown className="h-4 w-4" />
           </Button>
-          <Button className="rounded-md bg-[#000B4E] px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-white hover:bg-[#0012AA]">
+          <Button className="rounded-sm bg-[#1B6BE5] px-3 sm:px-6 font-medium py-4 text-xs sm:text-sm  text-white hover:bg-[#155ac7]">
             Deposit
           </Button>
         </div>

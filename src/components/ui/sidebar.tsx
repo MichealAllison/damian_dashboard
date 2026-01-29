@@ -137,7 +137,7 @@ function SidebarProvider({
           } as React.CSSProperties
         }
         className={cn(
-          "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full rounded-r-lg",
+          "has-data-[variant=inset]:bg-[#000B4E] flex min-h-svh w-full rounded-r-lg",
           className
         )}
         {...props}
@@ -167,7 +167,7 @@ function Sidebar({
       <div
         data-slot="sidebar"
         className={cn(
-          "bg-sidebar text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col",
+          "text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col",
           className
         )}
         {...props}
@@ -184,7 +184,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
+          className="bg-[#000B4E] text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -215,7 +215,7 @@ function Sidebar({
       <div
         data-sidebar="sidebar"
         data-slot="sidebar-inner"
-        className="bg-sidebar flex size-full flex-col border-r border-sidebar-border"
+        className="bg-[#000B4E] flex size-full flex-col"
       >
         {children}
       </div>

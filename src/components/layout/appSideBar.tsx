@@ -84,7 +84,7 @@ export function AppSidebar() {
   const pathname = usePathname()
 
   return (
-    <Sidebar className="border-none bg-[#000B4E]  w-full md:w-56 lg:w-64">
+    <Sidebar className="border-none  w-full md:w-56 lg:w-64">
       <SidebarHeader className="p-4 pb-2">
         {/* Logo */}
         <div className="flex items-center gap-2">

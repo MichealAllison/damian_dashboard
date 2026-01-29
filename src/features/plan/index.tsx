@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 
 // Tabs for the plan page
 const tabs = [
@@ -30,7 +30,7 @@ const statsCards = [
   },
 ]
 
-// Contribution sources data
+// Contribution sources data with SVG stroke colors
 const contributionSources = [
   {
     source: "Traditional contributions",
@@ -38,6 +38,8 @@ const contributionSources = [
     weight: 74.5,
     value: "$74,500.00",
     color: "bg-blue-600",
+    strokeColor: "#2563EB",
+    strokeColorHover: "#1D4ED8",
     type: "employee",
   },
   {
@@ -46,6 +48,8 @@ const contributionSources = [
     weight: 3.7,
     value: "$3,700.58",
     color: "bg-orange-500",
+    strokeColor: "#F97316",
+    strokeColorHover: "#EA580C",
     type: "employee",
   },
   {
@@ -54,6 +58,8 @@ const contributionSources = [
     weight: 0.0,
     value: "$0.00",
     color: "bg-gray-300",
+    strokeColor: "#D1D5DB",
+    strokeColorHover: "#9CA3AF",
     type: "employee",
   },
   {
@@ -62,6 +68,8 @@ const contributionSources = [
     weight: 0.0,
     value: "$0.00",
     color: "bg-gray-300",
+    strokeColor: "#D1D5DB",
+    strokeColorHover: "#9CA3AF",
     type: "employee",
   },
   {
@@ -70,6 +78,8 @@ const contributionSources = [
     weight: 21.8,
     value: "$21,800.00",
     color: "bg-[#E07702]",
+    strokeColor: "#E07702",
+    strokeColorHover: "#C2410C",
     type: "employer",
   },
   {
@@ -77,7 +87,9 @@ const contributionSources = [
     abbr: "QN",
     weight: 1.0,
     value: "$0.00",
-    color: "bg-gray-300",
+    color: "bg-teal-500",
+    strokeColor: "#14B8A6",
+    strokeColorHover: "#0D9488",
     type: "employer",
   },
   {
@@ -85,7 +97,9 @@ const contributionSources = [
     abbr: "QM",
     weight: 0.0,
     value: "$0.00",
-    color: "bg-gray-300",
+    color: "bg-purple-500",
+    strokeColor: "#A855F7",
+    strokeColorHover: "#9333EA",
     type: "employer",
   },
 ]
@@ -110,8 +124,24 @@ const Plan = () => {
   // SVG calculations
   const radius = 40
   const circumference = 2 * Math.PI * radius
-  const employeeLength = (employeePercent / 100) * circumference
-  const employerLength = (employerPercent / 100) * circumference
+
+  // Calculate segments for each contribution source
+  const segments = useMemo(() => {
+    const activeContributions = contributionSources.filter(item => item.weight > 0)
+    
+    return activeContributions.reduce<Array<typeof activeContributions[0] & { segmentLength: number; offset: number }>>((acc, item, index) => {
+      const segmentLength = (item.weight / total) * circumference
+      const offset = index === 0 ? 0 : acc[index - 1].offset + acc[index - 1].segmentLength
+      
+      acc.push({
+        ...item,
+        segmentLength,
+        offset,
+      })
+      
+      return acc
+    }, [])
+  }, [total, circumference])
 
   return (
     <div className="bg-gray-50 p-4 md:p-6 min-h-full">
@@ -172,56 +202,55 @@ const Plan = () => {
                   stroke="#E5E7EB"
                   strokeWidth="5"
                 />
-                {/* Employee segment (Blue) */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="40"
-                  fill="none"
-                  stroke={hoveredSegment === "employee" ? "#1D4ED8" : "#2563EB"}
-                  strokeWidth={hoveredSegment === "employee" ? "7" : "5"}
-                  strokeDasharray={`${employeeLength} ${circumference}`}
-                  strokeDashoffset="0"
-                  transform="rotate(-90 50 50)"
-                  className="cursor-pointer transition-all duration-300"
-                  style={{ 
-                    opacity: hoveredSegment && hoveredSegment !== "employee" ? 0.5 : 1,
-                  }}
-                  onMouseEnter={() => setHoveredSegment("employee")}
-                  onMouseLeave={() => setHoveredSegment(null)}
-                />
-                {/* Employer segment (Orange) */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="40"
-                  fill="none"
-                  stroke={hoveredSegment === "employer" ? "#C2410C" : "#EA580C"}
-                  strokeWidth={hoveredSegment === "employer" ? "7" : "5"}
-                  strokeDasharray={`${employerLength} ${circumference}`}
-                  strokeDashoffset={`${-employeeLength}`}
-                  transform="rotate(-90 50 50)"
-                  className="cursor-pointer transition-all duration-300"
-                  style={{ 
-                    opacity: hoveredSegment && hoveredSegment !== "employer" ? 0.5 : 1,
-                  }}
-                  onMouseEnter={() => setHoveredSegment("employer")}
-                  onMouseLeave={() => setHoveredSegment(null)}
-                />
+                {/* Individual contribution segments */}
+                {segments.map((segment) => {
+                  const isHovered = hoveredRow === segment.source
+                  const isAnyHovered = hoveredRow !== null
+                  
+                  return (
+                    <circle
+                      key={segment.abbr}
+                      cx="50"
+                      cy="50"
+                      r="40"
+                      fill="none"
+                      stroke={isHovered ? segment.strokeColorHover : segment.strokeColor}
+                      strokeWidth={isHovered ? "8" : "5"}
+                      strokeDasharray={`${segment.segmentLength} ${circumference}`}
+                      strokeDashoffset={`${-segment.offset}`}
+                      transform="rotate(-90 50 50)"
+                      className="cursor-pointer transition-all duration-300"
+                      style={{ 
+                        opacity: isAnyHovered && !isHovered ? 0.3 : 1,
+                      }}
+                      onMouseEnter={() => {
+                        setHoveredRow(segment.source)
+                        setHoveredSegment(segment.type)
+                      }}
+                      onMouseLeave={() => {
+                        setHoveredRow(null)
+                        setHoveredSegment(null)
+                      }}
+                    />
+                  )
+                })}
               </svg>
               {/* Center text */}
               <div className="absolute inset-0 flex items-center justify-center">
                 {hoveredRow !== null && contributionSources.find(item => item.source === hoveredRow) ? (
-                  // Show specific source when hovering on table row
+                  // Show specific source when hovering on table row or donut segment
                   (() => {
                     const hoveredItem = contributionSources.find(item => item.source === hoveredRow)!
                     return (
-                      <div className="flex flex-col items-center justify-center">
-                        <span className="text-2xl font-bold text-[#1e1e1e]">
+                      <div className="flex flex-col items-center justify-center text-center px-2">
+                        <span className="text-xl md:text-2xl font-bold text-[#1e1e1e]">
                           {hoveredItem.weight}%
                         </span>
-                        <span className="text-sm font-semibold text-[#1e1e1e]/70">
+                        <span className="text-xs md:text-sm font-semibold text-[#1e1e1e]/70">
                           {hoveredItem.abbr}
+                        </span>
+                        <span className="text-[10px] md:text-xs text-[#1e1e1e]/60 mt-0.5">
+                          {hoveredItem.value}
                         </span>
                       </div>
                     )
@@ -272,45 +301,59 @@ const Plan = () => {
                 </tr>
               </thead>
               <tbody>
-                {contributionSources.map((item) => (
-                  <tr 
-                    key={item.source} 
-                    className={`border-b border-gray-100 cursor-pointer transition-all duration-200 ${
-                      hoveredRow === item.source ? "bg-gray-50" : ""
-                    } ${
-                      hoveredSegment && item.type !== hoveredSegment ? "opacity-50" : "opacity-100"
-                    }`}
-                    onMouseEnter={() => {
-                      setHoveredRow(item.source)
-                      setHoveredSegment(item.type)
-                    }}
-                    onMouseLeave={() => {
-                      setHoveredRow(null)
-                      setHoveredSegment(null)
-                    }}
-                  >
-                    <td className="py-3 text-sm text-gray-700">{item.source}</td>
-                    <td className="py-3">
-                      <div className="flex items-center gap-3">
-                        <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
-                          <div
-                            className={`h-full ${item.color} rounded-full transition-all duration-300`}
-                            style={{ 
-                              width: `${item.weight}%`,
-                              transform: hoveredRow === item.source ? "scaleY(1.5)" : "scaleY(1)",
-                            }}
-                          ></div>
+                {contributionSources.map((item) => {
+                  const isHovered = hoveredRow === item.source
+                  const isAnyHovered = hoveredRow !== null
+                  
+                  return (
+                    <tr 
+                      key={item.source} 
+                      className={`border-b border-gray-100 cursor-pointer transition-all duration-200 ${
+                        isHovered ? "bg-blue-50" : ""
+                      }`}
+                      style={{
+                        opacity: isAnyHovered && !isHovered ? 0.5 : 1,
+                      }}
+                      onMouseEnter={() => {
+                        setHoveredRow(item.source)
+                        setHoveredSegment(item.type)
+                      }}
+                      onMouseLeave={() => {
+                        setHoveredRow(null)
+                        setHoveredSegment(null)
+                      }}
+                    >
+                      <td className="py-3 text-sm text-gray-700">
+                        <div className="flex items-center gap-2">
+                          {/* <span 
+                            className="w-3 h-3 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: item.strokeColor }}
+                          /> */}
+                          {item.source}
                         </div>
-                        <span className="text-sm text-gray-500">
-                          {item.weight.toFixed(1)}%
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-3 text-right text-sm text-gray-700">
-                      {item.value}
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td className="py-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full ${item.color} rounded-full transition-all duration-300`}
+                              style={{ 
+                                width: `${item.weight}%`,
+                                transform: isHovered ? "scaleY(1.5)" : "scaleY(1)",
+                              }}
+                            ></div>
+                          </div>
+                          <span className="text-sm text-gray-500">
+                            {item.weight.toFixed(1)}%
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-3 text-right text-sm text-gray-700">
+                        {item.value}
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>
