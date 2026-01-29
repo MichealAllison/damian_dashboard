@@ -121,7 +121,7 @@ const Dashboard = () => {
               <h2 className="text-lg font-semibold text-gray-900">Investing</h2>
               <a
                 href="/plan"
-                className="text-sm text-[#000B4E] hover:text-[#0012AA] hover:underline"
+                className="text-sm text-[#1B6BE5] hover:text-[#0012AA] hover:underline"
               >
                 See performance
               </a>
@@ -177,7 +177,7 @@ const Dashboard = () => {
               </div>
               <a
                 href="#"
-                className="mt-2 inline-block text-sm text-[#000B4E] hover:text-[#0012AA] hover:underline"
+                className="mt-2 inline-block text-sm text-[#1B6BE5] hover:text-[#0012AA] hover:underline"
               >
                 See breakdown
               </a>
@@ -203,13 +203,13 @@ const Dashboard = () => {
                 <span className="text-sm text-gray-600">
                   Tax losses harvested
                 </span>
-                <span className="text-sm text-[#000B4E] hover:underline cursor-pointer">
+                <span className="text-sm text-[#1B6BE5] hover:underline cursor-pointer">
                   Turn on
                 </span>
               </div>
               <a
                 href="#"
-                className="mt-2 inline-block text-sm text-[#000B4E] hover:text-[#0012AA] hover:underline"
+                className="mt-2 inline-block text-sm text-[#1B6BE5] hover:text-[#0012AA] hover:underline"
               >
                 See detail
               </a>
@@ -227,7 +227,7 @@ const Dashboard = () => {
               </h3>
               <a
                 href="#"
-                className="text-sm text-[#000B4E] hover:text-[#0012AA] hover:underline"
+                className="text-sm text-[#1B6BE5] hover:text-[#0012AA] hover:underline"
               >
                 See detail
               </a>

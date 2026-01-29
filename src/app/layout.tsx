@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Anuphan } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
 import { AppSidebar } from "../components/layout/appSideBar";
 
-const inter = Inter({
-  variable: "--font-inter",
+const anuphan = Anuphan({
+  variable: "--font-anuphan",
   subsets: ["latin"],
 });
 
@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans`}>
+      <body className={`${anuphan.variable} font-sans`}>
         <SidebarProvider>
           <div className="flex h-screen overflow-hidden w-full">
             <AppSidebar />
